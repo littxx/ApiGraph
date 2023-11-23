@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "outDir": "dist",
+    "module": "ES2022"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}

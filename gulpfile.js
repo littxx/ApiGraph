@@ -20,5 +20,12 @@ gulp.task("clean", () => {
 
 gulp.task("build", gulp.series("clean", "static", "script"));
 
+gulp.task(
+  "watch",
+  gulp.series("build", () => {
+    gulp.watch(["src/**/*.ts", "src/**/*.json"], gulp.series("build"));
+  })
+);
+
 // Tarefa padrão (default)
-gulp.task("default", gulp.series("build"));
+gulp.task("default", gulp.series("watch"));

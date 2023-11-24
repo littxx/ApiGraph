@@ -1,1 +1,2 @@
-console.log("um deus cosmisco");
+console.log("garou cosmisco");
+let b = "a";

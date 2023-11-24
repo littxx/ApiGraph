@@ -22,7 +22,7 @@ gulp.task("build", gulp.series("clean", "static", "script"));
 
 gulp.task(
   "watch",
-  gulp.series("build", () => {
+  gulp.series("build", function watchTask() {
     gulp.watch(["src/**/*.ts", "src/**/*.json"], gulp.series("build"));
   })
 );

@@ -1,2 +1,2 @@
-console.log("garou cosmisco");
+console.log("bom dia");
 let b = "a";

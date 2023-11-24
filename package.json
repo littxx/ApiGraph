@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node_modules/.bin/tsc"
+    "gulp": "node_modules/.bin/gulp"
   },
   "keywords": [],
   "author": "",
@@ -14,9 +14,8 @@
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "typescript": "^5.3.2"
-  },
-  "dependencies": {
+    "typescript": "^5.3.2",
     "gulp-rimraf": "^1.0.0"
-  }
+  },
+  "dependencies": {}
 }

@@ -1,14 +1,19 @@
 import { Server } from "http";
 
 export const normalizePort = (val: number | string): number => {
-  return typeof val === "string" ? parseInt(val) : val;
+  return typeof val === "string" ? parseInt(val, 10) : (val as number);
 };
 
 export const onError = (server: Server) => {
   return (error: NodeJS.ErrnoException): void => {
-    var port: number | string = server.address().port;
-    if (error.syscall !== "listen") throw error;
-    let bind = typeof port === "string" ? `pipe ${port}` : `port ${port}`;
+    const port: number | string | null = server.address()?.port || null;
+    const bind =
+      typeof port === "string" ? `pipe ${port}` : `port ${port || ""}`;
+
+    if (error.syscall !== "listen") {
+      throw error;
+    }
+
     switch (error.code) {
       case "EACCES":
         console.error(`${bind} requires elevated privileges`);
@@ -26,21 +31,28 @@ export const onError = (server: Server) => {
 
 export const onListening = (server: Server) => {
   return (): void => {
-    let addr = server.address();
-    let bind =
-      typeof addr === "string"
-        ? `pipe ${addr}`
-        : `http://${addr.address}:${addr.port}`;
-    console.log(`Listening at ${bind}...`);
+    const addr = server.address();
+
+    if (addr) {
+      const bind =
+        typeof addr === "string"
+          ? `pipe ${addr}`
+          : `http://${addr.address}:${addr.port}`;
+      console.log(`Listening at ${bind}...`);
+    } else {
+      console.error("Server address is null or undefined.");
+    }
   };
 };
 
 export const handleError = (error: Error) => {
-  let errorMessage: string = `${error.name}: ${error.message}`;
-  let env: string = process.env.NODE_ENV;
+  const errorMessage: string = `${error.name}: ${error.message}`;
+  const env: string = process.env.NODE_ENV || "";
+
   if (env !== "test" && env !== "pipelines") {
-    console.log(errorMessage);
+    console.error(errorMessage);
   }
+
   return Promise.reject(new Error(errorMessage));
 };
 
@@ -50,4 +62,4 @@ export const throwError = (condition: boolean, message: string): void => {
   }
 };
 
-export const JWT_SECRET: string = process.env.JWT_SECRET;
+export const JWT_SECRET: string | undefined = process.env.JWT_SECRET;
